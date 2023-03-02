@@ -10,11 +10,11 @@ jobs:
   get-affected-stacks:
     uses: ./.github/workflows/ci-atmos-affected-stacks.yaml
 
-  echo:
+  build-matrix:
     needs: get-affected-stacks
     runs-on: ubuntu-latest
     steps:
-      - name: echo
-        run: |
-          echo "Affected stacks:"
-          echo ${{ needs.get-affected-stacks.outputs.affected }}
+      - run: |
+          matrix=echo ${{ needs.get-affected-stacks.outputs.affected }} | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property"]}'
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+          echo $matrix
