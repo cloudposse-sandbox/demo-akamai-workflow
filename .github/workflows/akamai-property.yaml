@@ -1,0 +1,13 @@
+name: akamai-property
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+jobs:
+  get-affected-stacks:
+    uses: ./.github/workflows/ci-atmos-affected-stacks.yaml
+    with:
+      default-branch: main

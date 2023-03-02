@@ -1,0 +1,10 @@
+import:
+  - orgs/akadev/corp/eng/_defaults
+
+components:
+  terraform:
+    www:
+      metadata:
+        component: base-property
+      vars:
+        property_name: www.acme.com
