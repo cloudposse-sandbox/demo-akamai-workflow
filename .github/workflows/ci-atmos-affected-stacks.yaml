@@ -47,9 +47,6 @@ jobs:
         id: transform
         shell: bash
         run: |
-          affected=$(jq -c '{include: [.[] | {stack: .stack, component: .component, full_stack_name: (.stack + "-" + .component)}]}' < $(echo affected.json))
+          affected=$(jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]' < $(echo affected.json))
           echo "affected=$affected" >> $GITHUB_OUTPUT
-
-      - name: echo
-        run: |
-          echo ${{ steps.transform.outputs.affected }}
+          rm -f affected.json
