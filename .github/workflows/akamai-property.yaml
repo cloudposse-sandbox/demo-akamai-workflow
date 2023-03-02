@@ -11,3 +11,10 @@ jobs:
     uses: ./.github/workflows/ci-atmos-affected-stacks.yaml
     with:
       default-branch: main
+  echo:
+    needs: get-affected-stacks
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: |
+          echo ${{ needs.get-affected-stacks.outputs.affected }}
