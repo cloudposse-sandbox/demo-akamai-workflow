@@ -27,6 +27,7 @@ jobs:
         with:
           ref: ${{ inputs.default-branch }}}
           path: main-branch
+          depth: 0
 
       - uses: hashicorp/setup-terraform@v2
       - uses: cloudposse/github-action-setup-atmos@v1.0.0
