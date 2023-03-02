@@ -12,6 +12,10 @@ on:
         required: false
         type: string
         default: ${{ github.event.repository.default_branch }}
+    outputs:
+      affected:
+        description: The affected stacks
+        value: ${{ jobs.get-affected-stacks.outputs.affected }}
 jobs:
   get-affected-stacks:
     name: get affected stacks
