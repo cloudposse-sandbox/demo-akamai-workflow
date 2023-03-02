@@ -45,3 +45,7 @@ jobs:
         run: |
           affected=$(jq -c '{include: [.[] | {stack: .stack, component: .component, full_stack_name: (.stack + "-" + .component)}]}' < $(echo affected.json))
           echo "affected=$affected" >> $GITHUB_OUTPUT
+
+      - name: echo
+        run: |
+          echo ${{ steps.transform.outputs.affected }}
