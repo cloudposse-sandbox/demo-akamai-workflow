@@ -33,7 +33,7 @@ jobs:
       github_token: ${{ secrets.GITHUB_TOKEN }}
 
   plan-apply:
-    needs: build-matrix
+    needs: prep-deploymnet-env
     strategy:
       matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
