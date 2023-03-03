@@ -54,4 +54,4 @@ jobs:
           echo "affected=${affected}" >> GITHUB_OUTPUT
           rm -f affected.json
           echo "----------------------------"
-          cat $GITHUB_OUTPUT
+          echo $matrix
