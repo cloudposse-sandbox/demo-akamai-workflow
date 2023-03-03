@@ -1,0 +1,44 @@
+name: ci-atmos-plan-and-apply
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: The ref to checkout. If not provided, the pull_request head ref is used.
+        required: false
+        type: string
+        default: ${{ github.event.pull_request.head.sha }}
+      default-branch:
+        description: The default branch to use for the base ref.
+        required: false
+        type: string
+        default: ${{ github.event.repository.default_branch }}
+      stack:
+        description: The stack name.
+        required: true
+        type: string
+      component:
+        description: The component name.
+        required: true
+        type: string
+      component_path:
+        description: The component path.
+        required: true
+        type: string
+      environment:
+        description: The GitHub environment name to deploy to.
+        required: true
+        type: string
+    outputs:
+      affected:
+        description: The affected stacks
+        value: ${{ jobs.get-affected-stacks.outputs.affected }}
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Plan"
+  apply:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - run: echo "Apply"
