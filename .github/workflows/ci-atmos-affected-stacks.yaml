@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           affected=$(jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]' | jq tostring < $(echo affected.json))
-          echo "affected=${affected}" >> GITHUB_OUTPUT
           rm -f affected.json
           echo "----------------------------"
           echo $affected
+          echo "affected=$affected" >> GITHUB_OUTPUT
