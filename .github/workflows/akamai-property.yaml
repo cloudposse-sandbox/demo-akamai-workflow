@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          EOF=$(echo '${{ needs.get-affected-stacks.outputs.affected }}' | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
-          echo "matrix<<$EOF" >> GITHUB_OUTPUT
+          output=$(echo '${{ needs.get-affected-stacks.outputs.affected }}' | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
+          echo "matrix=${output}" >> GITHUB_OUTPUT
           echo "----------------------------"
           echo $matrix
 
