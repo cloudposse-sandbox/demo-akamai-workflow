@@ -16,6 +16,9 @@ on:
       affected:
         description: The affected stacks
         value: ${{ jobs.get-affected-stacks.outputs.affected }}
+      has-affected-stacks:
+        description: Whether there are affected stacks
+        value: ${{ jobs.get-affected-stacks.outputs.affected != '{"include":[]}' }}
 jobs:
   get-affected-stacks:
     name: get affected stacks

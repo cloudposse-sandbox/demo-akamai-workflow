@@ -19,8 +19,9 @@ jobs:
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
           echo $matrix
 
-  prep-deploymnet-env:
+  prep-deployment-env:
     needs: build-matrix
+    if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
     strategy:
       matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
@@ -33,7 +34,7 @@ jobs:
       github_token: ${{ github.GITHUB_TOKEN }}
 
   plan-apply:
-    needs: prep-deploymnet-env
+    needs: prep-deployment-env
     strategy:
       matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
