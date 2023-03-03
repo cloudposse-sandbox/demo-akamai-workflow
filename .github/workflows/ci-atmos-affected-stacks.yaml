@@ -50,8 +50,8 @@ jobs:
         id: transform
         shell: bash
         run: |
-          output=$(jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]' < $(echo affected.json))
-          echo "affected=${output}" >> GITHUB_OUTPUT
+          affected=$(jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]' < $(echo affected.json))
+          echo "affected=${affected}" >> GITHUB_OUTPUT
           rm -f affected.json
-          echo "-----------------------------"
-          echo $affected
+          echo "----------------------------"
+          echo $GITHUB_OUTPUT
