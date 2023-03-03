@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           # EOF=$(jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]' < $(echo affected.json))
-          EOF=$(echo affected.json | jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]')
+          EOF=$(cat affected.json | jq -c '[.[] | {stack: .stack, component: .component, component_path: .component_path, full_stack_name: (.stack + "-" + .component)}]')
           echo "affected<<$EOF" >> GITHUB_OUTPUT
           rm -f affected.json
           echo "-----------------------------"
