@@ -17,13 +17,14 @@ jobs:
       - run: |
           matrix=$(echo '${{ needs.get-affected-stacks.outputs.affected }}' | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
+          echo "----------------------------"
           echo $matrix
 
   prep-deployment-env:
     needs: build-matrix
     if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
     strategy:
-      matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
