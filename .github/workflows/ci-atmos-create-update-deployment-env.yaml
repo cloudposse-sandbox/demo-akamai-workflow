@@ -40,6 +40,8 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
       - uses: cloudposse/github-action-setup-atmos@v1.0.0
+        with:
+          install-wrapper: false
 
       - name: build payload from atmos
         id: payload
