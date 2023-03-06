@@ -14,8 +14,11 @@ jobs:
     needs: get-affected-stacks
     if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
-      - run: |
+      - id: matrix
+        run: |
           matrix=$(echo ${{ needs.get-affected-stacks.outputs.affected }} | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
           echo "$matrix"
           echo "matrix='$matrix'" >> $GITHUB_OUTPUT
