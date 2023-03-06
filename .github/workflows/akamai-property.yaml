@@ -24,16 +24,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
+          echo "${{ needs.build-matrix.outputs }}"
           echo "${{ needs.build-matrix.outputs.matrix }}"
 
-  test2:
-    needs: build-matrix
-    strategy:
-      matrix: ${{fromJson('{"include":[{"stack":"akadev-corp-eng","component":"www","component_path":"components/terraform/base-property","full_stack_name":"akadev-corp-eng-www"}]}')}}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo ${{ matrix.stack }}
+  # test2:
+  #   needs: build-matrix
+  #   strategy:
+  #     matrix: ${{fromJson('{"include":[{"stack":"akadev-corp-eng","component":"www","component_path":"components/terraform/base-property","full_stack_name":"akadev-corp-eng-www"}]}')}}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo ${{ matrix.stack }}
 
   # prep-deployment-env:
   #   needs: build-matrix
