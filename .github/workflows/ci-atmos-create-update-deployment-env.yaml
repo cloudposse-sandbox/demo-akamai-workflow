@@ -38,18 +38,11 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.default-branch }}
-          path: main-branch
-          fetch-depth: 0
-
       - uses: hashicorp/setup-terraform@v2
       - uses: cloudposse/github-action-setup-atmos@v1.0.0
 
       - name: build payload from atmos
         id: payload
-        shell: bash
         run: |
           payload=$(atmos describe stacks ${{ inputs.component }} -s ${{ inputs.stack }} --sections=settings --format json| jq -c 'keys[] as $k | .[$k].components.terraform | keys[] as $c | .[$c].settings.github')
           echo "payload=$payload" >> $GITHUB_OUTPUT
