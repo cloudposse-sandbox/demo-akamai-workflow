@@ -18,7 +18,7 @@ on:
         value: ${{ jobs.get-affected-stacks.outputs.affected }}
       has-affected-stacks:
         description: Whether there are affected stacks
-        value: ${{ jobs.get-affected-stacks.outputs.affected != '{"include":[]}' }}
+        value: ${{ jobs.get-affected-stacks.outputs.affected != '[]' }}
 jobs:
   get-affected-stacks:
     name: get affected stacks
@@ -54,4 +54,4 @@ jobs:
           rm -f affected.json
           echo "----------------------------"
           echo $affected
-          echo "affected=$affected" >> GITHUB_OUTPUT
+          echo "affected='$affected'" >> GITHUB_OUTPUT
