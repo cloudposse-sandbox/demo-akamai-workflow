@@ -20,6 +20,7 @@ jobs:
           echo "$matrix"
           echo "matrix='$matrix'" >> $GITHUB_OUTPUT
           echo "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
 
   test:
     needs: build-matrix
