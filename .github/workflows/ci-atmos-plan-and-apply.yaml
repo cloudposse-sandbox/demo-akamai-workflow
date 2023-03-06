@@ -42,4 +42,4 @@ jobs:
     needs: plan
     environment: ${{ inputs.environment }}
     steps:
-      - run: echo "atmos terraform apply ${{inputs.component} -s ${{inputs.stack}}"
+      - run: echo "atmos terraform apply ${{inputs.component}} -s ${{inputs.stack}}"
