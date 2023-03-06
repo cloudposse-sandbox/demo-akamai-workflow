@@ -26,6 +26,15 @@ jobs:
       - run: |
           echo ${{ fromJson(needs.build-matrix.outputs.matrix) }}
 
+  test2:
+    needs: build-matrix
+    strategy:
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ matrix.stack }}
+
   # prep-deployment-env:
   #   needs: build-matrix
   #   strategy:
