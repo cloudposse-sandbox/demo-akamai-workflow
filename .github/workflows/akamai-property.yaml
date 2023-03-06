@@ -37,7 +37,7 @@ jobs:
       environments_github_token: ${{ secrets.DEPLOYMENTS_GITHUB_TOKEN }}
 
   plan-apply:
-    name: apply ${{ matrix.stack }}-${{ matrix.component }}
+    name: plan and apply ${{ matrix.stack }}-${{ matrix.component }}
     needs:
       - build-matrix
       - prep-deployment-env

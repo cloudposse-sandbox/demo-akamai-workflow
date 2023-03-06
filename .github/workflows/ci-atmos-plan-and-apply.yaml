@@ -36,7 +36,7 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "atmos terraform plan ${{inputs.component} -s ${{inputs.stack}}"
+      - run: echo "atmos terraform plan ${{inputs.component}} -s ${{inputs.stack}}"
   apply:
     runs-on: ubuntu-latest
     needs: plan
