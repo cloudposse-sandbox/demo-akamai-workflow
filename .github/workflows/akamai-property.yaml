@@ -38,7 +38,9 @@ jobs:
 
   plan-apply:
     name: apply ${{ matrix.stack }}-${{ matrix.component }}
-    needs: prep-deployment-env
+    needs:
+      - build-matrix
+      - prep-deployment-env
     strategy:
       matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
