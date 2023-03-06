@@ -62,5 +62,7 @@ jobs:
             "${{github.api_url}}/repos/${{github.repository}}/environments/${{inputs.full_stack_name}}" \
           -d '${{ steps.payload.outputs.payload }}')
 
+          # The curl command doesn't fail if the GitHub API returns an error. We need to check the result code and exit 
+          # accordingly.
           resultCode=$(echo "$result" | head -n 1|cut -d$' ' -f2)
-          if [ "$resultCode" == "201" ]; then exit 0; else echo "$result" && exit 1; fi
+          if [ "$resultCode" == "200" ]; then exit 0; else echo "$result" && exit 1; fi
