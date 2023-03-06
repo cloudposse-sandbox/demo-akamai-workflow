@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "${{ needs.build-matrix.outputs }}"
+          echo "${{ fromJson(needs.build-matrix.outputs) }}"
           echo "${{ needs.build-matrix.outputs.matrix }}"
 
   # test2:
