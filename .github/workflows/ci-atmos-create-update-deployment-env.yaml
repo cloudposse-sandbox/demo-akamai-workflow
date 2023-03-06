@@ -44,6 +44,7 @@ jobs:
           path: main-branch
 
       - uses: hashicorp/setup-terraform@v2
+      - uses: cloudposse/github-action-setup-atmos@v1.0.0
 
       - name: build payload from atmos
         id: payload
