@@ -52,7 +52,7 @@ jobs:
       - name: create or update deployment environment
         shell: bash
         run: |
-          result=$curl \
+          result=$(curl \
             -o - -I\
             -sS \
             -X PUT \
@@ -60,5 +60,5 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.environments_github_token }}"\
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "${{github.api_url}}/repos/${{github.repository}}/environments/${{inputs.full_stack_name}}" \
-          -d "${{ steps.payload.outputs.payload }})"
+          -d "${{ steps.payload.outputs.payload }}")
           echo "$result" | jq -c '.'
