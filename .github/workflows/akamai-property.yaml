@@ -37,9 +37,10 @@ jobs:
       environments_github_token: ${{ secrets.DEPLOYMENTS_GITHUB_TOKEN }}
 
   plan-apply:
+    name: apply ${{ matrix.stack }}-${{ matrix.component }}
     needs: prep-deployment-env
     strategy:
-      matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
