@@ -53,7 +53,7 @@ jobs:
         shell: bash
         run: |
           result=$(curl \
-            -i
+            -i \
             -sS \
             -X PUT \
             -H "Accept: application/vnd.github+json" \
