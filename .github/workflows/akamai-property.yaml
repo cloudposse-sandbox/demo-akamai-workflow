@@ -18,7 +18,7 @@ jobs:
       - run: |
           matrix=$(echo ${{ needs.get-affected-stacks.outputs.affected }} | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
           echo "matrix='$matrix'" >> $GITHUB_OUTPUT
-          echo $matrix
+          echo "$matrix"
   test:
     needs: build-matrix
     runs-on: ubuntu-latest
