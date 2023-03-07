@@ -63,7 +63,7 @@ jobs:
       # If auto-deploy is false, use the payload from atmos stack config.
       - name: create or update deployment environment
         shell: bash
-        if: auto-deploy == false
+        if: inputs.auto-deploy == false
         run: |
           result=$(curl \
             -i \
@@ -83,7 +83,7 @@ jobs:
       # If auto-deploy is true, use the payload with an empty list of reviewers and a wait timer of 0.
       - name: create or update deployment environment
         shell: bash
-        if: auto-deploy == true
+        if: inputs.auto-deploy == true
         run: |
           result=$(curl \
             -i \
