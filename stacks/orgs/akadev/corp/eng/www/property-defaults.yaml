@@ -4,6 +4,14 @@ import:
 components:
   terraform:
     www:
+      settings:
+        github:
+          wait_timer: 5
+          reviewers:
+            - type: Team
+              id: 7467827
+            - type: Team
+              id: 7467844
       metadata:
         component: base-property
       vars:
