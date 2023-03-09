@@ -52,13 +52,17 @@ jobs:
         id: payload
         run: |
           payload=$(atmos describe stacks ${{ inputs.component }} -s ${{ inputs.stack }} --sections=settings --format json| jq -c 'keys[] as $k | .[$k].components.terraform | keys[] as $c | .[$c].settings.github')
+          echo 'payload<<EOF' >> $GITHUB_OUTPUT
           echo "payload=$payload" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
-      - name: build audo-deploy payload
+      - name: build auto-deploy payload
         id: auto-deploy-payload
         run: |
           payload='{"deployment_branch_policy":{"custom_branch_policies":true,"protected_branches":false},"reviewers":[],"wait_timer":0}'
+          echo 'payload<<EOF' >> $GITHUB_OUTPUT
           echo "payload=$payload" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       # If auto-deploy is false, use the payload from atmos stack config.
       - name: create or update deployment environment
