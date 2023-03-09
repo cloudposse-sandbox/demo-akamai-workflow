@@ -1,5 +1,5 @@
 import:
-  - orgs/akadev/corp/eng/_defaults
+  - orgs/akadev/corp/prod/_defaults
 
 components:
   terraform:

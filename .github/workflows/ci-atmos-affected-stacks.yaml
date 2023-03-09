@@ -7,6 +7,10 @@ on:
         required: false
         type: string
         default: ${{ github.event.pull_request.head.sha }}
+      head-ref:
+        description: The head ref to checkout. If not provided, the head default branch is used.
+        required: false
+        type: string
       default-branch:
         description: The default branch to use for the base ref.
         required: false
@@ -35,6 +39,11 @@ jobs:
           ref: ${{ inputs.default-branch }}
           path: main-branch
           fetch-depth: 0
+
+      - name: checkout head ref
+        if: inputs.head-ref != ''
+        id: head-ref
+        run: git checkout ${{ inputs.head-ref }}
 
       - uses: hashicorp/setup-terraform@v2
       - uses: cloudposse/github-action-setup-atmos@v1.0.0
