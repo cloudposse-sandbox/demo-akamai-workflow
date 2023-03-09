@@ -51,7 +51,7 @@ jobs:
       - name: build payload from atmos
         id: payload
         run: |
-          payload=$(atmos describe stacks ${{ inputs.component }} -s ${{ inputs.stack }} --sections=settings --format json| jq -c 'keys[] as $k | .[$k].components.terraform | keys[] as $c | .[$c].settings.github')
+          payload=$(atmos describe stacks -s ${{ inputs.stack }} --components ${{ inputs.component }} --sections=settings --format json| jq -c 'keys[] as $k | .[$k].components.terraform | keys[] as $c | .[$c].settings.github')
           echo 'payload<<EOF' >> $GITHUB_OUTPUT
           echo "$payload" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
