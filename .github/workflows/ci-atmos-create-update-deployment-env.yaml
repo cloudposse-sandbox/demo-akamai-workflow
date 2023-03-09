@@ -65,7 +65,7 @@ jobs:
           echo 'EOF' >> $GITHUB_OUTPUT
 
       # If auto-deploy is false, use the payload from atmos stack config.
-      - name: create or update deployment environment
+      - name: create or update standard deployment environment
         shell: bash
         if: inputs.auto-deploy == false
         run: |
@@ -85,7 +85,7 @@ jobs:
           if [ "$resultCode" == "200" ]; then exit 0; else echo "$result" && exit 1; fi
 
       # If auto-deploy is true, use the payload with an empty list of reviewers and a wait timer of 0.
-      - name: create or update deployment environment
+      - name: create or update auto-deploy deployment environment
         shell: bash
         if: inputs.auto-deploy == true
         run: |
