@@ -50,7 +50,7 @@ jobs:
     steps:
       - run: |
           # This is a mock of what the atmos describe dependants command will do
-          if [ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-www" ]; then
+          if [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-www" ]]; then
           dependencies='[
             {
                 "component": "www-activation",
@@ -59,7 +59,7 @@ jobs:
                 "full_stack_name": "akadev-corp-eng-www-activation"
             }
           ]'
-          elif [ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-www-activation" ]; then
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-www-activation" ]]; then
           dependencies='[
             {
                 "component": "devdatastream",
@@ -68,7 +68,7 @@ jobs:
                 "full_stack_name": "akadev-corp-eng-devdatastream"
             }
           ]'
-          elif [ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream" ]; then
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream" ]]; then
           dependencies='[
             {
                 "component": "devdatastream-activation",
@@ -77,7 +77,7 @@ jobs:
                 "full_stack_name": "akadev-corp-eng-devdatastream-activation"
             }
           ]'
-          elif [ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream-activation" ]; then
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream-activation" ]]; then
           dependencies='[
             {
                 "component": "www",
@@ -87,8 +87,8 @@ jobs:
             }
           ]'
           else
-          echo "Invalid parameter: ${{inputs.stack}}-${{inputs.component}}"
-          exit 1
+            echo "Invalid parameter: ${{inputs.stack}}-${{inputs.component}}"
+            exit 1
           fi
           matrix=$(echo $dependencies | jq -c '{include:[.[])
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
