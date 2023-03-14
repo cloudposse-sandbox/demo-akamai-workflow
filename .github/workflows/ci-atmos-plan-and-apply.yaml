@@ -59,6 +59,15 @@ jobs:
                 "full_stack_name": "akadev-corp-eng-www-activation"
             }
           ]'
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-prod-www" ]]; then
+          dependencies='[
+            {
+                "component": "www-activation",
+                "stack": "akadev-corp-prod",
+                "component_path": "components/terraform/base-property",
+                "full_stack_name": "akadev-corp-prod-www-activation"
+            }
+          ]'
           elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-www-activation" ]]; then
           dependencies='[
             {
@@ -66,6 +75,15 @@ jobs:
                 "stack": "akadev-corp-eng",
                 "component_path": "components/terraform/datastream",
                 "full_stack_name": "akadev-corp-eng-devdatastream"
+            }
+          ]'
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-prod-www-activation" ]]; then
+          dependencies='[
+            {
+                "component": "devdatastream",
+                "stack": "akadev-corp-eng",
+                "component_path": "components/terraform/datastream",
+                "full_stack_name": "akadev-corp-prod-prddatastream"
             }
           ]'
           elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream" ]]; then
@@ -77,6 +95,15 @@ jobs:
                 "full_stack_name": "akadev-corp-eng-devdatastream-activation"
             }
           ]'
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-prod-proddatastream" ]]; then
+          dependencies='[
+            {
+                "component": "proddatastream-activation",
+                "component_path": "components/terraform/datastream-activation",
+                "stack": "akadev-corp-prod",
+                "full_stack_name": "akadev-corp-prod-proddatastream-activation"
+            }
+          ]'
           elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-eng-devdatastream-activation" ]]; then
           dependencies='[
             {
@@ -84,6 +111,15 @@ jobs:
                 "component_path": "components/terraform/base-property",
                 "stack": "akadev-corp-eng",
                 "full_stack_name": "akadev-corp-eng-www"
+            }
+          ]'
+          elif [[ "${{inputs.stack}}-${{inputs.component}}" == "akadev-corp-prod-proddatastream-activation" ]]; then
+          dependencies='[
+            {
+                "component": "www",
+                "component_path": "components/terraform/base-property",
+                "stack": "akadev-corp-prod",
+                "full_stack_name": "akadev-corp-prod-www"
             }
           ]'
           else
