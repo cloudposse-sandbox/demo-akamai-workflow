@@ -63,7 +63,7 @@ jobs:
 
   # Plan and apply the changes to the draft environment
   plan-apply:
-    name: plan and apply ${{ matrix.stack }}-${{ matrix.component }}
+    name: ${{ matrix.stack }}-${{ matrix.component }}
     needs:
       - build-matrix
       - prep-draft-deployment-env
