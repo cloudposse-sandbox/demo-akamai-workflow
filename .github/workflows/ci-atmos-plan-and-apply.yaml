@@ -87,7 +87,7 @@ jobs:
             }
           ]'
           else
-          echo "Invalid parameter: {{inputs.stack}}-{{inputs.component}}"
+          echo "Invalid parameter: ${{inputs.stack}}-${{inputs.component}}"
           fi
             matrix=$(echo $dependencies | jq -c '{include:[.[])
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
