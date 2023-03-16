@@ -23,7 +23,7 @@ jobs:
   # without approvals. This is to allow the PR to be tested by applying the changes to Akamai to build the rule tree
   # but not activating it.
   prep-draft-deployment-env:
-    needs: build-matrix
+    needs: et-affected-stacks
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
@@ -42,9 +42,8 @@ jobs:
   plan-apply:
     name: ${{ matrix.stack }}-${{ matrix.component }}
     needs:
-      - build-matrix
+      - et-affected-stacks
       - prep-draft-deployment-env
-      - prep-deployment-env
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
