@@ -26,8 +26,8 @@ jobs:
     needs: build-matrix
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
-    if: ${{ matrix.component_path=="components/terraform/base-property" }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
+    if: ${{ matrix.component_path=="components/terraform/base-property" }}
     with:
       auto-deploy: true
       ref: ${{ github.event.pull_request.head.sha }}
@@ -47,8 +47,8 @@ jobs:
       - prep-deployment-env
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
-    if: ${{ matrix.component_path=="components/terraform/base-property" }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
+    if: ${{ matrix.component_path=="components/terraform/base-property" }}
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       default-branch: ${{ github.event.repository.default_branch }}
