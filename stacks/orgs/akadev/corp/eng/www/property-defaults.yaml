@@ -14,7 +14,11 @@ components:
       metadata:
         component: base-property
       vars:
+<<<<<<< Updated upstream
         property_name: www.acme30.com
+=======
+        property_name: www.acme32.com
+>>>>>>> Stashed changes
 
     wwwactivation:
       settings:
