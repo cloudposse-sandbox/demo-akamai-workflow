@@ -11,13 +11,18 @@ jobs:
   get-affected-stacks:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.affected.outputs.matrix }}
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      has-changes: ${{ steps.matrix.outputs.matrix!='{"include":[]}'}}
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
       - uses: cloudposse/github-action-setup-atmos@v1.0.0
       - id: affected
         uses: cloudposse/github-action-atmos-affected-stacks@feature/initial-implementation
+      - id: matrix
+        run: |
+          matrix=$(echo ${{ steps.affected.outputs.affected }} | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   # Create a "draft" deployment environment for each stack in the matrix. This environment will be auto-deployed to
   # without approvals. This is to allow the PR to be tested by applying the changes to Akamai to build the rule tree
@@ -26,8 +31,8 @@ jobs:
     needs: get-affected-stacks
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
+    if: ${{ needs.affected.outputs.has-affected-stacks == 'true' }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
-    if: ${{ matrix.component_path=="components/terraform/base-property" }}
     with:
       auto-deploy: true
       ref: ${{ github.event.pull_request.head.sha }}
@@ -47,7 +52,7 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
-    if: ${{ matrix.component_path=="components/terraform/base-property" }}
+    if: ${{ needs.affected.outputs.has-affected-stacks == 'true' }}
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       default-branch: ${{ github.event.repository.default_branch }}
