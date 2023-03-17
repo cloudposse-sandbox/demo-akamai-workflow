@@ -30,8 +30,8 @@ jobs:
   prep-draft-deployment-env:
     needs: get-affected-stacks
     strategy:
-      matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
-    if: ${{ needs.affected.outputs.has-affected-stacks == 'true' }}
+      matrix: ${{ fromJson(needs.get-affected-stack.outputs.matrix) }}
+    if: ${{matrix.component_path=="components/terraform/base-property" }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
     with:
       auto-deploy: true
@@ -50,9 +50,9 @@ jobs:
       - get-affected-stacks
       - prep-draft-deployment-env
     strategy:
-      matrix: ${{ fromJson(needs.affected.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.get-affected-stack.outputs.matrix) }}) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
-    if: ${{ needs.affected.outputs.has-affected-stacks == 'true' }}
+    if: ${{matrix.component_path=="components/terraform/base-property" }}
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       default-branch: ${{ github.event.repository.default_branch }}
