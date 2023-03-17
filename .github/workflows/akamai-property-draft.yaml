@@ -48,7 +48,7 @@ jobs:
 
   # Plan and apply the changes to the draft environment
   deploy-property-draft:
-    name: deploy ${{ matrix.stack_slug }}
+    name: deploy draft ${{ matrix.stack_slug }}
     needs:
       - get-affected-property-stacks
       - prep-environment
