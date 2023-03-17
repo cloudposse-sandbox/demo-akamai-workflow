@@ -30,7 +30,7 @@ jobs:
   # without approvals. This is to allow the PR to be tested by applying the changes to Akamai to build the rule tree
   # but not activating it.
   prep-environment:
-    name: ${{ matrix.stack_slug }}-draft
+    name: upsert deploy env ${{ matrix.stack_slug }}-draft
     needs: get-affected-property-stacks
     strategy:
       matrix: ${{ fromJson(needs.get-affected-property-stacks.outputs.matrix) }}
@@ -48,7 +48,7 @@ jobs:
 
   # Plan and apply the changes to the draft environment
   deploy-property-draft:
-    name: ${{ matrix.stack_slug }}
+    name: deploy ${{ matrix.stack_slug }}
     needs:
       - get-affected-property-stacks
       - prep-environment
