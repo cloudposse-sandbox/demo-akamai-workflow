@@ -23,6 +23,8 @@ jobs:
         run: |
           matrix=$(echo ${{ steps.affected.outputs.affected }} | jq -c '{include:[.[] | select(.component_path=="components/terraform/base-property")]}')
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
+          echo "$matrix"
+          echo $matrix!='{"include":[]}'
 
   # Create a "draft" deployment environment for each stack in the matrix. This environment will be auto-deployed to
   # without approvals. This is to allow the PR to be tested by applying the changes to Akamai to build the rule tree
