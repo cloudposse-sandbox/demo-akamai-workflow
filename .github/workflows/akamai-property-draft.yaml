@@ -8,7 +8,7 @@ on:
       - reopened
       - ready_for_review
 jobs:
-  get-affected-stacks:
+  get-affected-property-stacks:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
@@ -29,11 +29,11 @@ jobs:
   # Create a "draft" deployment environment for each stack in the matrix. This environment will be auto-deployed to
   # without approvals. This is to allow the PR to be tested by applying the changes to Akamai to build the rule tree
   # but not activating it.
-  prep-draft-deployment-env:
-    needs: get-affected-stacks
+  prep-environment:
+    needs: get-affected-property-stacks
     strategy:
-      matrix: ${{ fromJson(needs.get-affected-stacks.outputs.matrix) }}
-    if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
+      matrix: ${{ fromJson(needs.get-affected-property-stacks.outputs.matrix) }}
+    if: ${{ needs.get-affected-property-stacks.outputs.has-affected-stacks == 'true' }}
     uses: ./.github/workflows/ci-atmos-create-update-deployment-env.yaml
     with:
       auto-deploy: true
@@ -41,26 +41,26 @@ jobs:
       default-branch: ${{ github.event.repository.default_branch }}
       stack: ${{ matrix.stack }}
       component: ${{ matrix.component }}
-      full_stack_name: ${{ matrix.full_stack_name }}-draft
+      stack_slug: ${{ matrix.stack_slug }}-draft
     secrets:
       environments_github_token: ${{ secrets.DEPLOYMENTS_GITHUB_TOKEN }}
 
   # Plan and apply the changes to the draft environment
-  plan-apply:
-    name: ${{ matrix.stack }}-${{ matrix.component }}
+  deploy-property-draft:
+    name: ${{ matrix.stack_slug }}
     needs:
-      - get-affected-stacks
-      - prep-draft-deployment-env
+      - get-affected-property-stacks
+      - prep-environment
     strategy:
-      matrix: ${{ fromJson(needs.get-affected-stacks.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.get-affected-property-stacks.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
-    if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
+    if: ${{ needs.get-affected-property-stacks.outputs.has-affected-stacks == 'true' }}
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       default-branch: ${{ github.event.repository.default_branch }}
       stack: ${{ matrix.stack }}
       component: ${{ matrix.component }}
       component_path: ${{ matrix.component_path }}
-      environment: ${{ matrix.full_stack_name }}-draft
+      environment: ${{ matrix.stack_slug }}-draft
     secrets:
       environments_github_token: ${{ secrets.DEPLOYMENTS_GITHUB_TOKEN }}
