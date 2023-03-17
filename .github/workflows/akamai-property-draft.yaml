@@ -52,7 +52,7 @@ jobs:
       - get-affected-stacks
       - prep-draft-deployment-env
     strategy:
-      matrix: ${{ fromJson(needs.get-affected-stacks.outputs.matrix) }}) }}
+      matrix: ${{ fromJson(needs.get-affected-stacks.outputs.matrix) }}
     uses: ./.github/workflows/ci-atmos-plan-and-apply.yaml
     if: ${{ needs.get-affected-stacks.outputs.has-affected-stacks == 'true' }}
     with:
