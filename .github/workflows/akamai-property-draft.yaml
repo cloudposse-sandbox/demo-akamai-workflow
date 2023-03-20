@@ -15,8 +15,8 @@ jobs:
       has-affected-stacks: ${{ steps.matrix.outputs.matrix!='{"include":[]}'}}
     steps:
       - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
-      - uses: cloudposse/github-action-setup-atmos@v1.0.0
+      #- uses: hashicorp/setup-terraform@v2
+      #- uses: cloudposse/github-action-setup-atmos@v1.0.0
       - id: affected
         uses: cloudposse/github-action-atmos-affected-stacks@feature/initial-implementation
       - id: matrix
