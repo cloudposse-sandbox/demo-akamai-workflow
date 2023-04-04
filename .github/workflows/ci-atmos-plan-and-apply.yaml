@@ -60,7 +60,7 @@ jobs:
         with:
           component: ${{ inputs.component }}
           stack: ${{ inputs.stack }}
-          settings-path: akamai.secrets-arn
+          settings-path: akamai."secrets-arn"
 
       # This is just to show that the output is available. This will be the value passed to the
       # https://github.com/aws-actions/aws-secretsmanager-get-secrets action `secrets-ids` input.
@@ -101,7 +101,7 @@ jobs:
         with:
           component: ${{ inputs.component }}
           stack: ${{ inputs.stack }}
-          settings-path: akamai.secrets-arn
+          settings-path: akamai."secrets-arn"
 
       # This is just to show that the output is available. This will be the value passed to the
       # https://github.com/aws-actions/aws-secretsmanager-get-secrets action `secrets-ids` input.
