@@ -46,6 +46,10 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
+      - uses: hashicorp/setup-terraform@v2
+      - uses: cloudposse/github-action-setup-atmos@v1.0.0
+        with:
+          install-wrapper: false
       - name: Get Atmos Setting for Secret ARN
         uses: cloudposse/github-action-atmos-get-setting@main
         id: secrets-arn
@@ -79,6 +83,10 @@ jobs:
     needs: plan
     environment: ${{ inputs.environment }}
     steps:
+      - uses: hashicorp/setup-terraform@v2
+      - uses: cloudposse/github-action-setup-atmos@v1.0.0
+        with:
+          install-wrapper: false
       # This is just to show that the output is available. This will be the value passed to the
       # https://github.com/aws-actions/aws-secretsmanager-get-secrets action `secrets-ids` input.
       - run: echo ${steps.secrets-arn.outputs.value}
