@@ -55,7 +55,7 @@ jobs:
           install-wrapper: false
 
       - name: Get Atmos Setting for Secret ARN
-        uses: cloudposse/github-action-atmos-get-setting@bug/fix-multi-path-key-quoting
+        uses: cloudposse/github-action-atmos-get-setting@0.1.0
         id: secrets-arn
         with:
           component: ${{ inputs.component }}
@@ -96,7 +96,7 @@ jobs:
           install-wrapper: false
 
       - name: Get Atmos Setting for Secret ARN
-        uses: cloudposse/github-action-atmos-get-setting@main
+        uses: cloudposse/github-action-atmos-get-setting@0.1.0
         id: secrets-arn
         with:
           component: ${{ inputs.component }}
