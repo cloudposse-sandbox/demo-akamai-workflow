@@ -7,6 +7,7 @@ components:
       settings:
         akamai:
           secrets-arn: arn:aws:secretsmanager:us-east-1:111111111111:secret:MySecret-O0eM3e
+          foo: this is bar
         github:
           reviewers:
             - type: Team
@@ -16,7 +17,7 @@ components:
       metadata:
         component: base-property
       vars:
-        property_name: www.acme35.com
+        property_name: www.acme36.com
 
     wwwactivation:
       settings:

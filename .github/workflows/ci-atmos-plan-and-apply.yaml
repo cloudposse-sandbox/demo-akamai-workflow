@@ -46,17 +46,25 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: hashicorp/setup-terraform@v2
+      - uses: cloudposse/github-action-setup-atmos@v1.0.0
+        with:
+          install-wrapper: false
+
       - name: Get Atmos Setting for Secret ARN
-        uses: cloudposse/github-action-atmos-get-setting@main
+        uses: cloudposse/github-action-atmos-get-setting@0.1.0
         id: secrets-arn
         with:
           component: ${{ inputs.component }}
           stack: ${{ inputs.stack }}
-          settings-path: akamai.secrets-arn
+          settings-path: akamai."secrets-arn"
 
       # This is just to show that the output is available. This will be the value passed to the
       # https://github.com/aws-actions/aws-secretsmanager-get-secrets action `secrets-ids` input.
-      - run: echo ${steps.secrets-arn.outputs.value}
+      - run: echo ${{ steps.secrets-arn.outputs.value }}
 
       # This is just to mock calling terraform plan. In reality, this would be a call to `atmos terraform plan`
       - run: echo "atmos terraform plan ${{inputs.component}} -s ${{inputs.stack}}"
@@ -79,9 +87,25 @@ jobs:
     needs: plan
     environment: ${{ inputs.environment }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: hashicorp/setup-terraform@v2
+      - uses: cloudposse/github-action-setup-atmos@v1.0.0
+        with:
+          install-wrapper: false
+
+      - name: Get Atmos Setting for Secret ARN
+        uses: cloudposse/github-action-atmos-get-setting@0.1.0
+        id: secrets-arn
+        with:
+          component: ${{ inputs.component }}
+          stack: ${{ inputs.stack }}
+          settings-path: akamai."secrets-arn"
+
       # This is just to show that the output is available. This will be the value passed to the
       # https://github.com/aws-actions/aws-secretsmanager-get-secrets action `secrets-ids` input.
-      - run: echo ${steps.secrets-arn.outputs.value}
+      - run: echo ${{ steps.secrets-arn.outputs.value }}
 
       # This is just to mock calling terraform plan. In reality, this would be a call to `atmos terraform plan`
       - run: echo "atmos terraform apply ${{inputs.component}} -s ${{inputs.stack}} --auto-approve"
